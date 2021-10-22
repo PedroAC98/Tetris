@@ -46,7 +46,7 @@
 .score-board__tittle{
     margin: 1em 0 0.5em;
 }
-.score-board__container{
+.game-board__container{
     display:grid;
     align-items: center;
     justify-items: center;

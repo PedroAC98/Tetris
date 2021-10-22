@@ -1,7 +1,7 @@
 const BOARD_WIDTH = 10;
 const BOARD_HEIGHT = 20;
 
-let scoreBoard = document.querySelector('.score-board__container');
+let gameBoard = document.querySelector('.game-board__container');
 let miniscoreBoard = document.querySelector('.mini-score-board__container__block');
 
 //función que genera los bloques individuales de ambos tableros. Cada bloque (blockDOM) tiene un bloque dentro de él (insideblockDOM). 
@@ -24,7 +24,7 @@ function drawBoard(boardclass,width, heigth){
     }
     
 }
-drawBoard(scoreBoard,BOARD_WIDTH,BOARD_HEIGHT);
+drawBoard(gameBoard,BOARD_WIDTH,BOARD_HEIGHT);
 drawBoard(miniscoreBoard,4,4);
 
 
