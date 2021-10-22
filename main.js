@@ -4,6 +4,9 @@ const BOARD_HEIGHT = 20;
 let scoreBoard = document.querySelector('.score-board__container');
 let miniscoreBoard = document.querySelector('.mini-score-board__container__block');
 
+//función que genera los bloques individuales de ambos tableros. Cada bloque (blockDOM) tiene un bloque dentro de él (insideblockDOM). 
+//Esta función devuelve blockDOM para poder utilizarla en la función drawBoard()
+
 function generateBoardBlock() {
    const blockDOM = document.createElement('div');
    const insideblockDOM = document.createElement('div');
@@ -12,6 +15,8 @@ function generateBoardBlock() {
    blockDOM.appendChild(insideblockDOM);
 return blockDOM;
 }
+
+//Esta función pinta tantos bloques como width y heigth tenga nuestro tablero. 
 function drawBoard(boardclass,width, heigth){
     for(let i = 0; i<width*heigth; i++){
         const printBlock = generateBoardBlock();
@@ -21,4 +26,7 @@ function drawBoard(boardclass,width, heigth){
 }
 drawBoard(scoreBoard,BOARD_WIDTH,BOARD_HEIGHT);
 drawBoard(miniscoreBoard,4,4);
+
+
+//Tetrominos 
 
