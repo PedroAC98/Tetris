@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,26 +8,36 @@
     <title>Tetris</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="page__container">
-<main>
-    <div class="img__container">
-        <img class="img__logo" src="assets/img/title_screen.jpeg">
-    </div>
-    <div class="boards__container">
-        <div class="score-board__container"></div>
-        <div class="mini-score-board__container">
-            <p>Score</p>
-            <div class="score__counter">0</div>
-            <div class="mini-score-board__container__block"></div>
-            <div class="key-controllers__container">
-                <div class="move-keys"></div>
-                <div class="rotate-key"></div>
-            </div>
-        </div>
 
-    </div>
-</main>
-    
+<body class="page__container">
+    <main>
+        <div class="img__container">
+            <img class="img__logo" src="/assets/images/title_screen.jpeg">
+        </div>
+        <div class="boards__container">
+            <div class="score-board__container"></div>
+            <div class="mini-score-board__container">
+                <p class="score-board__tittle">Score</p>
+                <div class="score__counter">
+                    <p class="score">0</p>
+                </div>
+                <div class="mini-score-board__container__block"></div>
+                <div class="move-keys__container">
+                    <img class="left__arrow arrow" src="assets/images/arrow.svg">
+                    <img class="right__arrow arrow" src="assets/images/arrow.svg">
+                    <img class="down__arrow arrow" src="assets/images/arrow.svg">
+                    <div class="move-keys__text">Move</div>
+                </div>
+                <div class="rotate-key__container">
+                    <img class="up__arrow arrow" src="assets/images/arrow.svg">
+                    <div class="rotate-keys__text">Rotate</div>
+                </div>
+            </div>
+
+        </div>
+    </main>
     <script src="/main.js"></script>
+    <footer class="footer__container"></footer>
 </body>
+
 </html>
