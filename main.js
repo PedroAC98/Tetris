@@ -73,11 +73,18 @@ Jtetromino = [
 ]
 
 Otetromino = [
-    [width + 1, width + 2, width * 2 + 1, width * 2 + 2],
-    [width + 1, width + 2, width * 2 + 1, width * 2 + 2],
-    [width + 1, width + 2, width * 2 + 1, width * 2 + 2],
-    [width + 1, width + 2, width * 2 + 1, width * 2 + 2]
+    [0,1,width, width+1], //Creo que esta versión del tetromino O es mejor porque no deja espacios en blaco a los lados
+    [0,1,width, width+1],,
+    [0,1,width, width+1],,
+    [0,1,width, width+1],
 ]
+
+// Otetromino = [
+//     [width + 1, width + 2, width * 2 + 1, width * 2 + 2], //Version anterior del tetromino O
+//     [width + 1, width + 2, width * 2 + 1, width * 2 + 2],
+//     [width + 1, width + 2, width * 2 + 1, width * 2 + 2],
+//     [width + 1, width + 2, width * 2 + 1, width * 2 + 2]
+// ]
 
 Ttetromino = [
     [1, width, width + 1, width + 2],
