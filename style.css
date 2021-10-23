@@ -35,6 +35,10 @@
     background-color: black;
     }
 
+.board__tetromino{
+    opacity: 1;
+}
+
 
     /* --------------------------------- BOARDS CONTAINERS---------------------------------  */
 .boards__container{
