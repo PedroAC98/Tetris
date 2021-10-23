@@ -87,12 +87,24 @@ Ttetromino = [
 ]
 
 const allTetrominos = [Itetromino, Ltetromino, Stetromino, Ztetromino, Jtetromino, Otetromino, Ttetromino];
-let chosenTetromino = allTetrominos[1][3]; //Tetromino de ejemplo
+    
 
 function drawTetromino() {
-    chosenTetromino.forEach(index => {
+    generateRandomTetrominoe().forEach(index => {
         arrayBoard[currentPosition + index].classList.add('board__tetromino');
     })
 }
 
-drawTetromino()
+
+ 
+//Obtención de una pieza de manera aleatorio, con rotacion incial
+
+function generateRandomTetrominoe(){ 
+  let randomTetrominoe = Math.floor(Math.random() * 7);
+  let chosenTetrominoe = allTetrominos[randomTetrominoe][0];
+  return chosenTetrominoe;
+
+
+}
+drawTetromino();
+
