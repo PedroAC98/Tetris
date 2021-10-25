@@ -1,6 +1,9 @@
 const BOARD_WIDTH = 10;
 const BOARD_HEIGHT = 20;
 
+const MINI_BOARD_WIDTH = 4;
+const MINI_BOARD_HEIGHT = 4;
+
 let gameBoard = document.querySelector('.game-board__container');
 let miniBoard = document.querySelector('.mini-board__container__block');
 
@@ -63,44 +66,45 @@ arrayMiniBoard = Array.from(miniBoardBlocks);
 
 //-----------------------------------------------------------------------------------
 
-let currentPosition = 0;
+let currentPosition = 3;
+let currentPositionMiniBoard = 4;
 
-Itetromino = [
+const Itetromino = [
     [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH + 3],
     [1, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 3 + 1],
     [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH + 3],
     [1, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 3 + 1]
 ]
 
-Ltetromino = [
+const Ltetromino = [
     [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2],
     [0, 1, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1],
     [2, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2],
     [1, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2]
 ]
 
-Stetromino = [
+const Stetromino = [
     [1, 2, BOARD_WIDTH, BOARD_WIDTH + 1],
     [1, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 2],
     [BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2, BOARD_WIDTH * 2 + 1],
     [0, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1]
 ]
 
-Ztetromino = [
+const Ztetromino = [
     [0, 1, BOARD_WIDTH + 1, BOARD_WIDTH + 2],
     [2, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1],
     [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2],
     [1, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH * 2]
 ]
 
-Jtetromino = [
+const Jtetromino = [
     [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 2],
     [1, BOARD_WIDTH + 1, BOARD_WIDTH * 2, BOARD_WIDTH * 2 + 1],
     [0, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2],
     [1, 2, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1]
 ]
 
-Otetromino = [
+const Otetromino = [
     [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1], //Creo que esta versión del tetromino O es mejor porque no deja espacios en blaco a los lados
     [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1], ,
     [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1], ,
@@ -114,7 +118,7 @@ Otetromino = [
 //     [BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2]
 // ]
 
-Ttetromino = [
+const Ttetromino = [
     [1, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2],
     [1, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1],
     [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1],
@@ -123,25 +127,90 @@ Ttetromino = [
 
 const allTetrominos = [Itetromino, Ltetromino, Stetromino, Ztetromino, Jtetromino, Otetromino, Ttetromino];
 
-
 // Pinta tetromino random al inicio del tablero
 function drawTetrominoeInMainBoard() {
-    generateRandomTetrominoe().forEach(index => {
+    nextTetrominoe.forEach(index => {
         arrayBoard[currentPosition + index].classList.add('board__tetromino');
     })
 }
 //borra el tetromino del tablero
 function undrawTetrominoeInMainBoard() {
-    generateRandomTetrominoe().forEach(index => {
+    nextTetrominoe.forEach(index => {
         arrayBoard[currentPosition + index].classList.remove('board__tetromino');
     })
 }
 
+// ----------------------------------------FUNCIONES DEL MINIBOARD--------------------------------
+
+// function drawTetrominoeInMiniBoard() {
+//     generateRandomTetrominoe().forEach(index=> {
+//         arrayMiniBoard[currentPositionMiniBoard+index].classList.add('board__tetromino');
+//         return 
+//     })
+// }
+
+// function cleanMiniBoard() {
+//     generateRandomTetrominoe().forEach(index=> {
+//         arrayMiniBoard[currentPositionMiniBoard+index].classList.remove('board__tetromino');
+//     })
+// }
+// --------------------------------------------------------------------------------------------------
+
 //Obtención de una pieza de manera aleatorio, con rotacion incial
+let chosenTetrominoe = {};
+let randomTetrominoe = Math.floor(Math.random() * 7);
+let nextTetrominoe = generateRandomTetrominoe().piece;
+
 
 function generateRandomTetrominoe() {
-    let randomTetrominoe = Math.floor(Math.random() * 7);
-    let chosenTetrominoe = allTetrominos[randomTetrominoe][0];
-    return chosenTetrominoe;
+    chosenTetrominoe = {
+        positionAtTetrominoeList: randomTetrominoe,
+        piece: allTetrominos[randomTetrominoe][0],
+        position: arrayBoard[3],
+        rotation: 0,
+    }
+    return chosenTetrominoe
 }
-drawTetrominoeInMainBoard();
+generateRandomTetrominoe()
+
+
+// function generateRandomTetrominoe() {
+//     let randomTetrominoe = Math.floor(Math.random() * 7);
+//     let chosenTetrominoe = allTetrominos[randomTetrominoe][0];
+//     return chosenTetrominoe;
+// }
+
+drawTetrominoeInMainBoard()
+// drawTetrominoeInMiniBoard();
+
+
+//-------------------------------------------------------GESTION DEL MOVIMIENTO-----------------------------------------------------------------------
+
+function moveRight() {
+     return nextTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === 0)
+}
+moveRight();
+console.log(moveRight())
+
+function moveLeft() {
+    return nextTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === 0)
+}
+moveLeft();
+console.log(moveLeft())
+
+function moveDown() {
+    return nextTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === 0)
+}
+moveDown();
+console.log(moveRight())
+
+
+function rotate(){
+    if(chosenTetrominoe.rotation>=0 && chosenTetrominoe.rotation<3){
+        chosenTetrominoe.rotation++
+    }
+    else{
+        chosenTetrominoe.rotation = 0;
+    }
+    return chosenTetrominoe.rotation
+}
