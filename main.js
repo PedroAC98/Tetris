@@ -3,7 +3,7 @@ const BOARD_HEIGHT = 20;
 
 let gameBoard = document.querySelector('.game-board__container');
 let miniBoard = document.querySelector('.mini-board__container__block');
-const width = 10;
+
 
 //función que genera los bloques individuales de ambos tableros. Cada bloque (blockDOM) tiene un bloque dentro de él (insideblockDOM). 
 //Esta función devuelve blockDOM para poder utilizarla en la función drawBoard()
@@ -18,9 +18,9 @@ function generateBoardBlock() {
     return blockDOM;
 }
 
-//Esta función pinta tantos bloques como width y heigth tenga nuestro tablero. 
-function drawBoard(boardclass, width, heigth) {
-    for (let i = 0; i < width * heigth; i++) {
+//Esta función pinta tantos bloques como BOARD_WIDTH y heigth tenga nuestro tablero. 
+function drawBoard(boardclass, BOARD_WIDTH, heigth) {
+    for (let i = 0; i < BOARD_WIDTH * heigth; i++) {
         const printBlock = generateBoardBlock();
         boardclass.appendChild(printBlock);
     }
@@ -37,7 +37,7 @@ function generateBorderBlock() {
 
 //función que pinta bloques-borde al final del tablero
 function drawBorderBlock() {
-    for (let i = 0; i < width; i++) {
+    for (let i = 0; i < BOARD_WIDTH; i++) {
         const printBorderBlock = generateBorderBlock();
         gameBoard.appendChild(printBorderBlock);
     }
@@ -48,7 +48,7 @@ drawBorderBlock();
 
 //Selección de todos los divs dentro de gameBoard
 //Array.from genera un array usando el objeto devuelto por querySelectorAll(). De esta forma podemos iterar sobre el array usando el index.
-//Al asignar una variable width a 10, podemos usar width como coordenada para iterar sobre las filas.
+//Al asignar una variable BOARD_WIDTH a 10, podemos usar BOARD_WIDTH como coordenada para iterar sobre las filas.
 
 //---------------------------------------ARRAYS--------------------------------------
 
@@ -66,59 +66,59 @@ arrayMiniBoard = Array.from(miniBoardBlocks);
 let currentPosition = 0;
 
 Itetromino = [
-    [width, width + 1, width + 2, width + 3],
-    [1, width + 1, width * 2 + 1, width * 3 + 1],
-    [width, width + 1, width + 2, width + 3],
-    [1, width + 1, width * 2 + 1, width * 3 + 1]
+    [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH + 3],
+    [1, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 3 + 1],
+    [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH + 3],
+    [1, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 3 + 1]
 ]
 
 Ltetromino = [
-    [width, width + 1, width + 2, width * 2],
-    [0, 1, width + 1, width * 2 + 1],
-    [2, width, width + 1, width + 2],
-    [1, width + 1, width * 2 + 1, width * 2 + 2]
+    [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2],
+    [0, 1, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1],
+    [2, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2],
+    [1, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2]
 ]
 
 Stetromino = [
-    [1, 2, width, width + 1],
-    [1, width + 1, width + 2, width * 2 + 2],
-    [width + 1, width + 2, width * 2, width * 2 + 1],
-    [0, width, width + 1, width * 2 + 1]
+    [1, 2, BOARD_WIDTH, BOARD_WIDTH + 1],
+    [1, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 2],
+    [BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2, BOARD_WIDTH * 2 + 1],
+    [0, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1]
 ]
 
 Ztetromino = [
-    [0, 1, width + 1, width + 2],
-    [2, width + 1, width + 2, width * 2 + 1],
-    [width, width + 1, width * 2 + 1, width * 2 + 2],
-    [1, width, width + 1, width * 2]
+    [0, 1, BOARD_WIDTH + 1, BOARD_WIDTH + 2],
+    [2, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1],
+    [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2],
+    [1, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH * 2]
 ]
 
 Jtetromino = [
-    [width, width + 1, width + 2, width * 2 + 2],
-    [1, width + 1, width * 2, width * 2 + 1],
-    [0, width, width + 1, width + 2],
-    [1, 2, width + 1, width * 2 + 1]
+    [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 2],
+    [1, BOARD_WIDTH + 1, BOARD_WIDTH * 2, BOARD_WIDTH * 2 + 1],
+    [0, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2],
+    [1, 2, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1]
 ]
 
 Otetromino = [
-    [0, 1, width, width + 1], //Creo que esta versión del tetromino O es mejor porque no deja espacios en blaco a los lados
-    [0, 1, width, width + 1], ,
-    [0, 1, width, width + 1], ,
-    [0, 1, width, width + 1],
+    [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1], //Creo que esta versión del tetromino O es mejor porque no deja espacios en blaco a los lados
+    [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1], ,
+    [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1], ,
+    [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1],
 ]
 
 // Otetromino = [
-//     [width + 1, width + 2, width * 2 + 1, width * 2 + 2], //Version anterior del tetromino O
-//     [width + 1, width + 2, width * 2 + 1, width * 2 + 2],
-//     [width + 1, width + 2, width * 2 + 1, width * 2 + 2],
-//     [width + 1, width + 2, width * 2 + 1, width * 2 + 2]
+//     [BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2], //Version anterior del tetromino O
+//     [BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2],
+//     [BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2],
+//     [BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2]
 // ]
 
 Ttetromino = [
-    [1, width, width + 1, width + 2],
-    [1, width + 1, width + 2, width * 2 + 1],
-    [width, width + 1, width + 2, width * 2 + 1],
-    [1, width, width + 1, width * 2 + 1]
+    [1, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2],
+    [1, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1],
+    [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1],
+    [1, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1]
 ]
 
 const allTetrominos = [Itetromino, Ltetromino, Stetromino, Ztetromino, Jtetromino, Otetromino, Ttetromino];
