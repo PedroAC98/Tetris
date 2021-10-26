@@ -160,6 +160,8 @@ function undrawTetrominoeInMainBoard() {
 let chosenTetrominoe = {};
 let randomTetrominoe = Math.floor(Math.random() * 7);
 let nextTetrominoe = generateRandomTetrominoe().piece;
+let currentTetrominoe = [nextTetrominoe, chosenTetrominoe.rotation];
+
 
 
 function generateRandomTetrominoe() {
@@ -187,30 +189,55 @@ drawTetrominoeInMainBoard()
 //-------------------------------------------------------GESTION DEL MOVIMIENTO-----------------------------------------------------------------------
 
 function moveRight() {
-     return nextTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === 0)
+     return currentTetrominoe[0].some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH-1)
 }
-moveRight();
-console.log(moveRight())
 
 function moveLeft() {
-    return nextTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === 0)
+    return currentTetrominoe[0].some(index => (currentPosition + index) % BOARD_WIDTH === 0)
 }
-moveLeft();
-console.log(moveLeft())
+
 
 function moveDown() {
-    return nextTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === 0)
+    return currentTetrominoe[0].some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('.boardBlock'))
 }
-moveDown();
-console.log(moveRight())
-
 
 function rotate(){
-    if(chosenTetrominoe.rotation>=0 && chosenTetrominoe.rotation<3){
-        chosenTetrominoe.rotation++
+    if(currentTetrominoe[1]>=0 && currentTetrominoe[1]<3){
+        currentTetrominoe[1]++
     }
     else{
-        chosenTetrominoe.rotation = 0;
+        currentTetrominoe[1] = 0;
     }
-    return chosenTetrominoe.rotation
+    return currentTetrominoe[1]
 }
+
+function stop(){
+    if(currentTetrominoe[0].some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('.boardBlock'))){
+        currentTetrominoe[0].forEach(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.add('.boardBlock'))
+    }
+}
+
+document.addEventListener('keydown', event=>{
+    let code = event.keyCode;
+    if(code===37&& moveLeft()=== false){
+        undrawTetrominoeInMainBoard();
+        currentPosition=currentPosition-1;
+        drawTetrominoeInMainBoard();
+    }
+    if(code===39&& moveRight()=== false){
+        undrawTetrominoeInMainBoard();
+        currentPosition=currentPosition+1;
+        drawTetrominoeInMainBoard();
+    }
+    if(code===40&& moveDown()=== false){
+        undrawTetrominoeInMainBoard();
+        currentPosition=currentPosition+BOARD_WIDTH;
+        drawTetrominoeInMainBoard();
+        stop();
+    }
+    if(code===38&& rotate()=== false){
+        undrawTetrominoeInMainBoard();
+        currentPosition=currentPosition+BOARD_WIDTH;
+        drawTetrominoeInMainBoard();
+    }
+})
