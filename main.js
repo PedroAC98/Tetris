@@ -129,13 +129,13 @@ const allTetrominos = [Itetromino, Ltetromino, Stetromino, Ztetromino, Jtetromin
 
 // Pinta tetromino random al inicio del tablero
 function drawTetrominoeInMainBoard() {
-    nextTetrominoe.forEach(index => {
+    currentTetrominoe.forEach(index => {
         arrayBoard[currentPosition + index].classList.add('board__tetromino');
     })
 }
 //borra el tetromino del tablero
 function undrawTetrominoeInMainBoard() {
-    nextTetrominoe.forEach(index => {
+    currentTetrominoe.forEach(index => {
         arrayBoard[currentPosition + index].classList.remove('board__tetromino');
     })
 }
@@ -160,7 +160,8 @@ function undrawTetrominoeInMainBoard() {
 let chosenTetrominoe = {};
 let randomTetrominoe = Math.floor(Math.random() * 7);
 let nextTetrominoe = generateRandomTetrominoe().piece;
-let currentTetrominoe = [nextTetrominoe, chosenTetrominoe.rotation];
+let currentRotation = chosenTetrominoe.rotation;
+let currentTetrominoe = allTetrominos[randomTetrominoe][currentRotation];
 
 
 
@@ -189,55 +190,53 @@ drawTetrominoeInMainBoard()
 //-------------------------------------------------------GESTION DEL MOVIMIENTO-----------------------------------------------------------------------
 
 function moveRight() {
-     return currentTetrominoe[0].some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH-1)
+    return currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1)
 }
 
 function moveLeft() {
-    return currentTetrominoe[0].some(index => (currentPosition + index) % BOARD_WIDTH === 0)
+    return currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === 0)
 }
 
 
 function moveDown() {
-    return currentTetrominoe[0].some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('.boardBlock'))
+    return currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('.boardBlock'))
 }
 
-function rotate(){
-    if(currentTetrominoe[1]>=0 && currentTetrominoe[1]<3){
-        currentTetrominoe[1]++
-    }
-    else{
-        currentTetrominoe[1] = 0;
-    }
-    return currentTetrominoe[1]
+function rotate() {
+    return currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('.boardBlock') && currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === 0)&&currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1))
 }
 
-function stop(){
-    if(currentTetrominoe[0].some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('.boardBlock'))){
-        currentTetrominoe[0].forEach(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.add('.boardBlock'))
+function stop() {
+    if (currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('.boardBlock'))) {
+        currentTetrominoe.forEach(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.add('.boardBlock'))
     }
 }
 
-document.addEventListener('keydown', event=>{
+document.addEventListener('keydown', event => {
     let code = event.keyCode;
-    if(code===37&& moveLeft()=== false){
+    if (code === 37 && moveLeft() === false) {
         undrawTetrominoeInMainBoard();
-        currentPosition=currentPosition-1;
+        currentPosition = currentPosition - 1;
         drawTetrominoeInMainBoard();
     }
-    if(code===39&& moveRight()=== false){
+    if (code === 39 && moveRight() === false) {
         undrawTetrominoeInMainBoard();
-        currentPosition=currentPosition+1;
+        currentPosition = currentPosition + 1;
         drawTetrominoeInMainBoard();
     }
-    if(code===40&& moveDown()=== false){
+    if (code === 40 && moveDown() === false) {
         undrawTetrominoeInMainBoard();
-        currentPosition=currentPosition+BOARD_WIDTH;
+        currentPosition = currentPosition + BOARD_WIDTH;
         drawTetrominoeInMainBoard();
         stop();
     }
-    if(code===38&& rotate()=== false){
-        undrawTetrominoeInMainBoard();
-        currentPosition=currentPosition+BOARD_WIDTH;
+    if (code === 38 && rotate() === false) {
+        undrawTetrominoeInMainBoard()
+        currentRotation++
+        if (currentRotation === currentTetrominoe.length) {
+            currentRotation = 0
+        }
+        currentTetrominoe = allTetrominos[randomTetrominoe][currentRotation]
         drawTetrominoeInMainBoard();
-    }
+    } 
 })
