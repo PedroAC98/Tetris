@@ -71,63 +71,56 @@ arrayMiniBoard = Array.from(miniBoardBlocks);
 let currentPosition = 3;
 let currentPositionMiniBoard = 4;
 
-const Itetromino = [
-    [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH + 3],
+I_TETROMINO = [
+    [0, 1, 2, 3],
     [1, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 3 + 1],
     [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH + 3],
     [1, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 3 + 1]
 ]
 
-const Ltetromino = [
-    [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2],
+L_TETROMINO = [
+    [0, 1, 2, BOARD_WIDTH + 2],
     [0, 1, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1],
     [2, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2],
     [1, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2]
 ]
 
-const Stetromino = [
+S_TETROMINO = [
     [1, 2, BOARD_WIDTH, BOARD_WIDTH + 1],
     [1, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 2],
     [BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2, BOARD_WIDTH * 2 + 1],
     [0, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1]
 ]
 
-const Ztetromino = [
+Z_TETROMINO = [
     [0, 1, BOARD_WIDTH + 1, BOARD_WIDTH + 2],
     [2, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1],
     [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2],
     [1, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH * 2]
 ]
 
-const Jtetromino = [
-    [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 2],
+J_TETROMINO = [
+    [0, 1, 2, BOARD_WIDTH + 2],
     [1, BOARD_WIDTH + 1, BOARD_WIDTH * 2, BOARD_WIDTH * 2 + 1],
     [0, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2],
     [1, 2, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1]
 ]
 
-const Otetromino = [
-    [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1], //Creo que esta versión del tetromino O es mejor porque no deja espacios en blaco a los lados
-    [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1], ,
-    [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1], ,
-    [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1],
+O_TETROMINO = [
+    [0, 1, BOARD_WIDTH + 1, BOARD_WIDTH + 2],
+    [BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2],
+    [BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2],
+    [BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2]
 ]
 
-// Otetromino = [
-//     [BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2], //Version anterior del tetromino O
-//     [BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2],
-//     [BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2],
-//     [BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2]
-// ]
-
-const Ttetromino = [
-    [1, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2],
+T_TETROMINO = [
+    [0, 1, 2, BOARD_WIDTH + 1],
     [1, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1],
     [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1],
-    [1, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1]
+    [1, BOARD_WIDTH,  BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1]
 ]
 
-const allTetrominos = [Itetromino, Ltetromino, Stetromino, Ztetromino, Jtetromino, Otetromino, Ttetromino];
+const allTetrominos = [I_TETROMINO, L_TETROMINO, S_TETROMINO, Z_TETROMINO, J_TETROMINO, O_TETROMINO, T_TETROMINO];
 
 // Pinta tetromino random al inicio del tablero
 function drawTetrominoeInMainBoard() {
