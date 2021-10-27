@@ -192,11 +192,13 @@ drawTetrominoeInMainBoard()
 //-------------------------------------------------------GESTION DEL MOVIMIENTO-----------------------------------------------------------------------
 
 function moveRight() {
-    return currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1)
+    return currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1
+     || currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')))
 }
 
 function moveLeft() {
-    return currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === 0)
+    return currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === 0 
+    || currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')))
 }
 
 
