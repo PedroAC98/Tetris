@@ -71,52 +71,53 @@ arrayMiniBoard = Array.from(miniBoardBlocks);
 let currentPosition = 3;
 let currentPositionMiniBoard = 4;
 
-I_TETROMINO = [
+const I_TETROMINO = [
     [0, 1, 2, 3],
     [1, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 3 + 1],
-    [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH + 3],
+    [0, 1, 2, 3],
     [1, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 3 + 1]
 ]
 
-L_TETROMINO = [
-    [0, 1, 2, BOARD_WIDTH + 2],
+const L_TETROMINO = [
+    [0, 1, 2, BOARD_WIDTH ],
     [0, 1, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1],
     [2, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2],
     [1, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2]
 ]
 
-S_TETROMINO = [
+const S_TETROMINO = [
     [1, 2, BOARD_WIDTH, BOARD_WIDTH + 1],
     [1, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 2],
-    [BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2, BOARD_WIDTH * 2 + 1],
-    [0, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1]
+    [1, 2, BOARD_WIDTH, BOARD_WIDTH + 1],
+    [1, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 2]
 ]
 
-Z_TETROMINO = [
+const Z_TETROMINO = [
     [0, 1, BOARD_WIDTH + 1, BOARD_WIDTH + 2],
     [2, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1],
-    [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2],
-    [1, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH * 2]
+    [0, 1, BOARD_WIDTH + 1, BOARD_WIDTH + 2],
+    [2, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1]
 ]
 
-J_TETROMINO = [
+const J_TETROMINO = [
     [0, 1, 2, BOARD_WIDTH + 2],
     [1, BOARD_WIDTH + 1, BOARD_WIDTH * 2, BOARD_WIDTH * 2 + 1],
     [0, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2],
     [1, 2, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1]
 ]
 
-O_TETROMINO = [
-    [0, 1, BOARD_WIDTH + 1, BOARD_WIDTH + 2],
-    [BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2],
-    [BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2],
-    [BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2]
+const O_TETROMINO = [
+    [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1], //Creo que esta versión del tetromino O es mejor porque no deja espacios en blaco a los lados
+    [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1], ,
+    [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1], ,
+    [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1],
 ]
 
-T_TETROMINO = [
+
+const T_TETROMINO = [
     [0, 1, 2, BOARD_WIDTH + 1],
     [1, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1],
-    [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1],
+    [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2, 1],
     [1, BOARD_WIDTH,  BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1]
 ]
 
