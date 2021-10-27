@@ -211,8 +211,11 @@ function stop() {
     }
 }
 
-document.addEventListener('keydown', event => {
+window.addEventListener('keydown', event=>{
+    if (code === 123)
     event.preventDefault();
+})
+document.addEventListener('keydown', event => {
     let code = event.keyCode;
     if (code === 37 && moveLeft() === false) {
         undrawTetrominoeInMainBoard();
