@@ -108,8 +108,8 @@ const J_TETROMINO = [
 
 const O_TETROMINO = [
     [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1], //Creo que esta versión del tetromino O es mejor porque no deja espacios en blaco a los lados
-    [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1], ,
-    [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1], ,
+    [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1],
+    [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1],
     [0, 1, BOARD_WIDTH, BOARD_WIDTH + 1],
 ]
 
@@ -126,15 +126,16 @@ const allTetrominos = [I_TETROMINO, L_TETROMINO, S_TETROMINO, Z_TETROMINO, J_TET
 // Pinta tetromino random al inicio del tablero
 function drawTetrominoeInMainBoard() {
     currentTetrominoe.forEach(index => {
-        arrayBoard[currentPosition + index].classList.add('board__tetromino');
+        arrayBoard[currentPosition + index].classList.add('tetromino');
     })
 }
 //borra el tetromino del tablero
 function undrawTetrominoeInMainBoard() {
     currentTetrominoe.forEach(index => {
-        arrayBoard[currentPosition + index].classList.remove('board__tetromino');
+        arrayBoard[currentPosition + index].classList.remove('tetromino');
     })
 }
+
 
 // ----------------------------------------FUNCIONES DEL MINIBOARD--------------------------------
 
@@ -155,11 +156,8 @@ function undrawTetrominoeInMainBoard() {
 //Obtención de una pieza de manera aleatorio, con rotacion incial
 let chosenTetrominoe = {};
 let randomTetrominoe = Math.floor(Math.random() * 7);
-let nextTetrominoe = generateRandomTetrominoe().piece;
-let currentRotation = chosenTetrominoe.rotation;
+let currentRotation = generateRandomTetrominoe().rotation;
 let currentTetrominoe = allTetrominos[randomTetrominoe][currentRotation];
-
-
 
 function generateRandomTetrominoe() {
     chosenTetrominoe = {
@@ -169,35 +167,27 @@ function generateRandomTetrominoe() {
         rotation: 0,
     }
     return chosenTetrominoe
+
 }
-generateRandomTetrominoe()
-
-
-// function generateRandomTetrominoe() {
-//     let randomTetrominoe = Math.floor(Math.random() * 7);
-//     let chosenTetrominoe = allTetrominos[randomTetrominoe][0];
-//     return chosenTetrominoe;
-// }
-
-drawTetrominoeInMainBoard()
-// drawTetrominoeInMiniBoard();
-
 
 //-------------------------------------------------------GESTION DEL MOVIMIENTO-----------------------------------------------------------------------
 
 function moveRight() {
     return currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1
         || currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')))
+        ||currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('taken'))
 }
 
 function moveLeft() {
     return currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === 0
         || currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')))
+        ||currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('taken'))
 }
 
 
 function moveDown() {
     return currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock'))
+    ||currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('taken'))
 }
 
 function rotate() {
@@ -206,11 +196,15 @@ function rotate() {
         || currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1))
 }
 
+// -------------------------------------------//Esta función no hacia ----------------------------------------------------------
+
 function stop() {
     if (currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock'))) {
-        currentTetrominoe.forEach(index => arrayBoard[currentPosition + index].classList.add('boardBlock'))
+        currentTetrominoe.forEach(index => arrayBoard[currentPosition + index].classList.add('taken'));
     }
 }
+
+// ----------------------------------------------------------------------------------------------------------------------
 
 window.addEventListener('keydown', event => {
     let code = event.keyCode;
@@ -234,7 +228,6 @@ document.addEventListener('keydown', event => {
         undrawTetrominoeInMainBoard();
         currentPosition = currentPosition + BOARD_WIDTH;
         drawTetrominoeInMainBoard();
-        stop();
     }
     if (code === 38 && rotate() === false) {
         undrawTetrominoeInMainBoard()
@@ -252,19 +245,29 @@ document.addEventListener('keydown', event => {
 
 // 
 
-function gameLoop (){ //Mover ficha hacia abajo, game over, eliminar fila completa
-setInterval(() => {
-    if (moveDown() === false) {
-        undrawTetrominoeInMainBoard();
-        currentPosition = currentPosition + BOARD_WIDTH;
-        drawTetrominoeInMainBoard();
-        generateRandomTetrominoe();
-    }
-}, 1000);
+function gameLoop() { //Mover ficha hacia abajo, game over, eliminar fila completa
+    undrawTetrominoeInMainBoard;
+    drawTetrominoeInMainBoard();
+    setInterval(() => {
+        if (moveDown() === false) {
+            undrawTetrominoeInMainBoard();
+            currentPosition = currentPosition + BOARD_WIDTH;
+            drawTetrominoeInMainBoard();
+        }
+        else {
+            stop();
+            currentPosition = 3;
+            randomTetrominoe = Math.floor(Math.random() * 7);
+            currentTetrominoe = allTetrominos[randomTetrominoe][currentRotation];
+
+        }
+    }, 1000);
+
 }
+gameLoop();
 
 // ------------------------------------------------GAMEOVER--------------------------------------------
-function gameOver(){
+function gameOver() {
     // const HEIGHT= ['0',]; //variable que nos da la posición de inicio de todas las filas
     // for(let i = 0 ; i<BOARD_WIDTH; i++){
     //     row.push(`BOARD_WIDTH*${i}`)
@@ -275,13 +278,13 @@ function gameOver(){
 
 
 
-function updateTetrisBoard(){
+function updateTetrisBoard() {
     //Mirar si hay alguna fila que cumpla la condición: todos los bloques de width*[i] contienen la clase:'board__tetromino'.
-    const ROW= ['0',]; //variable que nos da la posición de inicio de todas las filas
-    for(let i = 1 ; i<BOARD_HEIGHT; i++){
+    const ROW = ['0',]; //variable que nos da la posición de inicio de todas las filas
+    for (let i = 1; i < BOARD_HEIGHT; i++) {
         ROW.push(`BOARD_WIDTH*${i}`)
     }
-    
+
     return ROW.every(index => arrayBoard[index].classList.contains('board__tetromino'));
 }
 updateTetrisBoard();
