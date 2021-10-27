@@ -36,7 +36,7 @@ function generateBorderBlock() {
     const borderBlockDOM = document.createElement('div');
     borderBlockDOM.classList.add('boardBlock');
     borderBlockDOM.classList.add('block');
-    borderBlockDOM.style.display='none';
+    borderBlockDOM.style.display = 'none';
     return borderBlockDOM;
 }
 
@@ -79,7 +79,7 @@ const I_TETROMINO = [
 ]
 
 const L_TETROMINO = [
-    [0, 1, 2, BOARD_WIDTH ],
+    [0, 1, 2, BOARD_WIDTH],
     [0, 1, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1],
     [2, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2],
     [1, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1, BOARD_WIDTH * 2 + 2]
@@ -118,7 +118,7 @@ const T_TETROMINO = [
     [0, 1, 2, BOARD_WIDTH + 1],
     [1, BOARD_WIDTH + 1, BOARD_WIDTH + 2, BOARD_WIDTH * 2 + 1],
     [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2, 1],
-    [1, BOARD_WIDTH,  BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1]
+    [1, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1]
 ]
 
 const allTetrominos = [I_TETROMINO, L_TETROMINO, S_TETROMINO, Z_TETROMINO, J_TETROMINO, O_TETROMINO, T_TETROMINO];
@@ -187,12 +187,12 @@ drawTetrominoeInMainBoard()
 
 function moveRight() {
     return currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1
-     || currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')))
+        || currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')))
 }
 
 function moveLeft() {
-    return currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === 0 
-    || currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')))
+    return currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === 0
+        || currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')))
 }
 
 
@@ -201,9 +201,9 @@ function moveDown() {
 }
 
 function rotate() {
-    return currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock') 
-  ||currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === 0)
-    ||currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1))
+    return currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')
+        || currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === 0)
+        || currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1))
 }
 
 function stop() {
@@ -212,6 +212,11 @@ function stop() {
     }
 }
 
+window.addEventListener('keydown', event => {
+    let code = event.keyCode;
+    if (code === 123)
+        event.preventDefault();
+})
 document.addEventListener('keydown', event => {
     event.preventDefault();
     let code = event.keyCode;
@@ -239,7 +244,46 @@ document.addEventListener('keydown', event => {
         }
         currentTetrominoe = allTetrominos[randomTetrominoe][currentRotation]
         drawTetrominoeInMainBoard();
-    } 
+    }
 })
+
+
+//-------------------------------------------------------BUCLES------------------------------------------------------------------------
+
+// 
+
+function gameLoop (){ //Mover ficha hacia abajo, game over, eliminar fila completa
+setInterval(() => {
+    if (moveDown() === false) {
+        undrawTetrominoeInMainBoard();
+        currentPosition = currentPosition + BOARD_WIDTH;
+        drawTetrominoeInMainBoard();
+        generateRandomTetrominoe();
+    }
+}, 1000);
+}
+
+// ------------------------------------------------GAMEOVER--------------------------------------------
+function gameOver(){
+    // const HEIGHT= ['0',]; //variable que nos da la posición de inicio de todas las filas
+    // for(let i = 0 ; i<BOARD_WIDTH; i++){
+    //     row.push(`BOARD_WIDTH*${i}`)
+    // }
+
+}
+
+
+
+
+function updateTetrisBoard(){
+    //Mirar si hay alguna fila que cumpla la condición: todos los bloques de width*[i] contienen la clase:'board__tetromino'.
+    const ROW= ['0',]; //variable que nos da la posición de inicio de todas las filas
+    for(let i = 1 ; i<BOARD_HEIGHT; i++){
+        ROW.push(`BOARD_WIDTH*${i}`)
+    }
+    
+    return ROW.every(index => arrayBoard[index].classList.contains('board__tetromino'));
+}
+updateTetrisBoard();
 
 
