@@ -29,7 +29,9 @@
     margin: 2px;
     opacity: 0.2;
 }
-
+/* .boardBlock{
+    display: none;
+} */
 .insideblock{
     width: 10px;
     height: 10px;

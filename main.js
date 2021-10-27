@@ -34,7 +34,9 @@ drawBoard(miniBoard, 4, 4);
 //función que genera bloques-borde
 function generateBorderBlock() {
     const borderBlockDOM = document.createElement('div');
-    borderBlockDOM.classList.add('border__block');
+    borderBlockDOM.classList.add('boardBlock');
+    borderBlockDOM.classList.add('block');
+    borderBlockDOM.style.display='none';
     return borderBlockDOM;
 }
 
@@ -199,20 +201,23 @@ function moveLeft() {
 
 
 function moveDown() {
-    return currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('.boardBlock'))
+    return currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock'))
 }
 
 function rotate() {
-    return currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('.boardBlock') && currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === 0)&&currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1))
+    return currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock') 
+  ||currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === 0)
+    ||currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1))
 }
 
 function stop() {
-    if (currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('.boardBlock'))) {
-        currentTetrominoe.forEach(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.add('.boardBlock'))
+    if (currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock'))) {
+        currentTetrominoe.forEach(index => arrayBoard[currentPosition + index].classList.add('boardBlock'))
     }
 }
 
 document.addEventListener('keydown', event => {
+    event.preventDefault();
     let code = event.keyCode;
     if (code === 37 && moveLeft() === false) {
         undrawTetrominoeInMainBoard();
@@ -240,3 +245,5 @@ document.addEventListener('keydown', event => {
         drawTetrominoeInMainBoard();
     } 
 })
+
+
