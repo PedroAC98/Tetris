@@ -120,8 +120,45 @@ const T_TETROMINO = [
     [BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH + 2, 1],
     [1, BOARD_WIDTH, BOARD_WIDTH + 1, BOARD_WIDTH * 2 + 1]
 ]
+// Generamos las piezas para el miniboard, con solo la primera rotacion y la constante MINI_BOARD_WIDTH
+const I_TETROMINO_MINI = [
+    [0, 1, 2, 3],
+    
+]
+
+const L_TETROMINO_MINI = [
+    [0, 1, 2, MINI_BOARD_WIDTH],
+    
+]
+
+const S_TETROMINO_MINI = [
+    [1, 2, MINI_BOARD_WIDTH, MINI_BOARD_WIDTH + 1],
+    
+]
+
+const Z_TETROMINO_MINI = [
+    [0, 1, MINI_BOARD_WIDTH + 1, MINI_BOARD_WIDTH + 2],
+    
+]
+
+const J_TETROMINO_MINI = [
+    [0, 1, 2, MINI_BOARD_WIDTH + 2],
+    
+]
+
+const O_TETROMINO_MINI = [
+    [0, 1, MINI_BOARD_WIDTH, MINI_BOARD_WIDTH + 1],
+    
+]
+
+
+const T_TETROMINO_MINI = [
+    [0, 1, 2, MINI_BOARD_WIDTH + 1],
+    
+]
 
 const allTetrominos = [I_TETROMINO, L_TETROMINO, S_TETROMINO, Z_TETROMINO, J_TETROMINO, O_TETROMINO, T_TETROMINO];
+const allTetrominosMini = [I_TETROMINO_MINI, L_TETROMINO_MINI, S_TETROMINO_MINI, Z_TETROMINO_MINI, J_TETROMINO_MINI, O_TETROMINO_MINI, T_TETROMINO_MINI];
 
 // Pinta tetromino random al inicio del tablero
 function drawTetrominoeInMainBoard() {
@@ -139,13 +176,17 @@ function undrawTetrominoeInMainBoard() {
 
 // ----------------------------------------FUNCIONES DEL MINIBOARD--------------------------------
 
-// function drawTetrominoeInMiniBoard() {
-//     generateRandomTetrominoe().forEach(index=> {
-//         arrayMiniBoard[currentPositionMiniBoard+index].classList.add('board__tetromino');
-//         return 
-//     })
-// }
+ function drawTetrominoeInMiniBoard() {
+    nextTetrominoe.miniPiece.forEach(index => {
+        arrayMiniBoard[currentPositionMiniBoard + index].classList.add('tetromino');
+    })
+}
 
+function undrawTetrominoeInMiniBoard() {
+    currentTetrominoe.miniPiece.forEach(index => {
+        arrayMiniBoard[currentPositionMiniBoard + index].classList.remove('tetromino');
+    })
+}
 // function cleanMiniBoard() {
 //     generateRandomTetrominoe().forEach(index=> {
 //         arrayMiniBoard[currentPositionMiniBoard+index].classList.remove('board__tetromino');
@@ -160,12 +201,14 @@ let nextTetrominoe = generateRandomTetrominoe();
 function generateRandomTetrominoe() {
     
     let randomTetrominoe = Math.floor(Math.random() * 7);
+    
 
      return {
         positionAtTetrominoeList: randomTetrominoe,
         piece: allTetrominos[randomTetrominoe][0],
         position: arrayBoard[3],
         rotation: 0,
+        miniPiece: allTetrominosMini[randomTetrominoe][0],
     }
     
 
@@ -252,8 +295,10 @@ document.addEventListener('keydown', event => {
 // 
 
 function gameLoop() { //Mover ficha hacia abajo, game over, eliminar fila completa
-    // undrawTetrominoeInMainBoard();
-    // drawTetrominoeInMainBoard();
+
+    undrawTetrominoeInMainBoard();
+    drawTetrominoeInMainBoard();
+    drawTetrominoeInMiniBoard();
     setInterval(() => {
         if (moveDown() === false) {
             undrawTetrominoeInMainBoard();
@@ -263,11 +308,17 @@ function gameLoop() { //Mover ficha hacia abajo, game over, eliminar fila comple
         }
         else {
             stop();
+            
             currentPosition = 3;
             currentTetrominoe = nextTetrominoe;
             nextTetrominoe = generateRandomTetrominoe();
-            updateTetrisBoard();
             drawTetrominoeInMainBoard();
+            undrawTetrominoeInMiniBoard();
+            drawTetrominoeInMiniBoard();
+            
+        
+            
+
         }
     }, 1000);
 
