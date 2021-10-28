@@ -125,13 +125,13 @@ const allTetrominos = [I_TETROMINO, L_TETROMINO, S_TETROMINO, Z_TETROMINO, J_TET
 
 // Pinta tetromino random al inicio del tablero
 function drawTetrominoeInMainBoard() {
-    currentTetrominoe.forEach(index => {
+    currentTetrominoe.piece.forEach(index => {
         arrayBoard[currentPosition + index].classList.add('tetromino');
     })
 }
 //borra el tetromino del tablero
 function undrawTetrominoeInMainBoard() {
-    currentTetrominoe.forEach(index => {
+    currentTetrominoe.piece.forEach(index => {
         arrayBoard[currentPosition + index].classList.remove('tetromino');
     })
 }
@@ -154,58 +154,56 @@ function undrawTetrominoeInMainBoard() {
 // --------------------------------------------------------------------------------------------------
 
 //Obtención de una pieza de manera aleatorio, con rotacion incial
-let chosenTetrominoe = {};
-let currentRotation=0;
-let randomTetrominoe = Math.floor(Math.random() * 7);
-
-let currentTetrominoe = allTetrominos[randomTetrominoe][currentRotation];
+let currentTetrominoe = generateRandomTetrominoe();
+let nextTetrominoe = generateRandomTetrominoe();
 
 function generateRandomTetrominoe() {
-    currentRotation = chosenTetrominoe.rotation;
+    
+    let randomTetrominoe = Math.floor(Math.random() * 7);
 
-    chosenTetrominoe = {
+     return {
         positionAtTetrominoeList: randomTetrominoe,
         piece: allTetrominos[randomTetrominoe][0],
         position: arrayBoard[3],
         rotation: 0,
     }
-    return chosenTetrominoe
+    
 
 }
 
 //-------------------------------------------------------GESTION DEL MOVIMIENTO-----------------------------------------------------------------------
 
 function moveRight() {
-    return currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1
-        || currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')))
-        ||currentTetrominoe.some(index => arrayBoard[currentPosition + index+1].classList.contains('taken'))
+    return currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1
+        || currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')))
+        ||currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index+1].classList.contains('taken'))
         
 }
 
 function moveLeft() {
-    return currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === 0
-        || currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')))
-        ||currentTetrominoe.some(index => arrayBoard[currentPosition + index-1].classList.contains('taken'))
+    return currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === 0
+        || currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')))
+        ||currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index-1].classList.contains('taken'))
 }
 
 
 function moveDown() {
-    return currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock'))
-    ||currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('taken'))
+    return currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock'))
+    ||currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('taken'))
 }
 
 function rotate() {
-    return currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')
-        || currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === 0)
-        || currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1))
+    return currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')
+        || currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === 0)
+        || currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1))
 }
 
 // -------------------------------------------//Esta función no hacia ----------------------------------------------------------
 
 function stop() {
-    if (currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock'))||
-    currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('taken')) ){
-        currentTetrominoe.forEach(index => arrayBoard[currentPosition + index].classList.add('taken'));
+    if (currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock'))||
+    currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('taken')) ){
+        currentTetrominoe.piece.forEach(index => arrayBoard[currentPosition + index].classList.add('taken'));
     }
     else{
         moveDown()
@@ -239,11 +237,11 @@ document.addEventListener('keydown', event => {
     }
     if (code === 38 && rotate() === false) {
         undrawTetrominoeInMainBoard()
-        currentRotation++
-        if (currentRotation === currentTetrominoe.length) {
-            currentRotation = 0
+        currentTetrominoe.rotation++
+        if (currentTetrominoe.rotation === currentTetrominoe.piece.length) {
+            currentTetrominoe.rotation = 0
         }
-        currentTetrominoe = allTetrominos[randomTetrominoe][currentRotation]
+        currentTetrominoe.piece = allTetrominos[currentTetrominoe.positionAtTetrominoeList][currentTetrominoe.rotation]
         drawTetrominoeInMainBoard();
     }
 })
@@ -254,7 +252,7 @@ document.addEventListener('keydown', event => {
 // 
 
 function gameLoop() { //Mover ficha hacia abajo, game over, eliminar fila completa
-    undrawTetrominoeInMainBoard;
+    undrawTetrominoeInMainBoard();
     drawTetrominoeInMainBoard();
     setInterval(() => {
         if (moveDown() === false) {
@@ -265,8 +263,8 @@ function gameLoop() { //Mover ficha hacia abajo, game over, eliminar fila comple
         else {
             stop();
             currentPosition = 3;
-            randomTetrominoe = Math.floor(Math.random() * 7);
-            currentTetrominoe = allTetrominos[randomTetrominoe][currentRotation];
+            currentTetrominoe = nextTetrominoe;
+            nextTetrominoe = generateRandomTetrominoe();
 
         }
     }, 1000);
@@ -295,6 +293,6 @@ function updateTetrisBoard() {
 
     return ROW.every(index => arrayBoard[index].classList.contains('board__tetromino'));
 }
-updateTetrisBoard();
+ updateTetrisBoard();
 
 
