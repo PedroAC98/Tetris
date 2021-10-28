@@ -308,17 +308,13 @@ function gameLoop() { //Mover ficha hacia abajo, game over, eliminar fila comple
         }
         else {
             stop();
-            
+            updateTetrisBoard();
             currentPosition = 3;
             currentTetrominoe = nextTetrominoe;
             nextTetrominoe = generateRandomTetrominoe();
             drawTetrominoeInMainBoard();
             undrawTetrominoeInMiniBoard();
             drawTetrominoeInMiniBoard();
-            
-        
-            
-
         }
     }, 1000);
 
@@ -348,6 +344,10 @@ function updateTetrisBoard() {
             arrayBoard[index].classList.remove('taken');
             arrayBoard[index].classList.remove('tetromino');
         })
+
+        const REMOVED_ROW = arrayBoard.splice(i,BOARD_WIDTH);
+            arrayBoard = REMOVED_ROW.concat(arrayBoard);
+            arrayBoard.forEach(index=>gameBoard.appendChild(index));
     }
 
   }
@@ -361,5 +361,3 @@ function updateTetrisBoard() {
     // return ROW.every(index => arrayBoard[index].classList.contains('board__tetromino'));
 }
  updateTetrisBoard();
-
-
