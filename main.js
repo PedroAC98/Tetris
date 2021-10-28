@@ -155,11 +155,14 @@ function undrawTetrominoeInMainBoard() {
 
 //Obtención de una pieza de manera aleatorio, con rotacion incial
 let chosenTetrominoe = {};
+let currentRotation=0;
 let randomTetrominoe = Math.floor(Math.random() * 7);
-let currentRotation = generateRandomTetrominoe().rotation;
+
 let currentTetrominoe = allTetrominos[randomTetrominoe][currentRotation];
 
 function generateRandomTetrominoe() {
+    currentRotation = chosenTetrominoe.rotation;
+
     chosenTetrominoe = {
         positionAtTetrominoeList: randomTetrominoe,
         piece: allTetrominos[randomTetrominoe][0],
@@ -175,13 +178,14 @@ function generateRandomTetrominoe() {
 function moveRight() {
     return currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1
         || currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')))
-        ||currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('taken'))
+        ||currentTetrominoe.some(index => arrayBoard[currentPosition + index+1].classList.contains('taken'))
+        
 }
 
 function moveLeft() {
     return currentTetrominoe.some(index => (currentPosition + index) % BOARD_WIDTH === 0
         || currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')))
-        ||currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('taken'))
+        ||currentTetrominoe.some(index => arrayBoard[currentPosition + index-1].classList.contains('taken'))
 }
 
 
@@ -199,8 +203,12 @@ function rotate() {
 // -------------------------------------------//Esta función no hacia ----------------------------------------------------------
 
 function stop() {
-    if (currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock'))) {
+    if (currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock'))||
+    currentTetrominoe.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('taken')) ){
         currentTetrominoe.forEach(index => arrayBoard[currentPosition + index].classList.add('taken'));
+    }
+    else{
+        moveDown()
     }
 }
 
