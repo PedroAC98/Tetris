@@ -198,7 +198,7 @@ function undrawTetrominoeInMiniBoard() {
 let currentTetrominoe = generateRandomTetrominoe();
 let nextTetrominoe = generateRandomTetrominoe();
 
-function generateRandomTetrominoe() {
+function generateRandomTetrominoe() {   
     
     let randomTetrominoe = Math.floor(Math.random() * 7);
     
@@ -299,7 +299,10 @@ function gameLoop() { //Mover ficha hacia abajo, game over, eliminar fila comple
     undrawTetrominoeInMainBoard();
     drawTetrominoeInMainBoard();
     drawTetrominoeInMiniBoard();
-    setInterval(() => {
+    const timer= setInterval(() => {
+         
+        
+        
         if (moveDown() === false) {
             undrawTetrominoeInMainBoard();
             currentPosition = currentPosition + BOARD_WIDTH;
@@ -320,17 +323,26 @@ function gameLoop() { //Mover ficha hacia abajo, game over, eliminar fila comple
             
 
         }
+        gameOver(timer);
+        
     }, 1000);
 
 }
 gameLoop();
 
 // ------------------------------------------------GAMEOVER--------------------------------------------
-function gameOver() {
-    // const HEIGHT= ['0',]; //variable que nos da la posición de inicio de todas las filas
-    // for(let i = 0 ; i<BOARD_WIDTH; i++){
-    //     row.push(`BOARD_WIDTH*${i}`)
-    // }
+function gameOver(timer) {
+    const row = [0,1,2,3,4,5,6,7,8,9];
+
+    if(row.find(index => arrayBoard[index].classList.contains('taken'))){
+        let img = document.querySelector(".game-board__container")
+       let text= document.createElement('h1');
+       text.textContent ="HAS PERDIDO PRINGAO";
+       img.appendChild(text);
+        clearInterval(timer);   
+        
+    }
+    
 
 }
 
