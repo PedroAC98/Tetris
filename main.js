@@ -295,17 +295,16 @@ document.addEventListener('keydown', event => {
 // 
 
 function gameLoop() { //Mover ficha hacia abajo, game over, eliminar fila completa
+
     undrawTetrominoeInMainBoard();
     drawTetrominoeInMainBoard();
     drawTetrominoeInMiniBoard();
-    
-    
-    
     setInterval(() => {
         if (moveDown() === false) {
             undrawTetrominoeInMainBoard();
             currentPosition = currentPosition + BOARD_WIDTH;
             drawTetrominoeInMainBoard();
+            
         }
         else {
             stop();
@@ -340,12 +339,26 @@ function gameOver() {
 
 function updateTetrisBoard() {
     //Mirar si hay alguna fila que cumpla la condición: todos los bloques de width*[i] contienen la clase:'board__tetromino'.
-    const ROW = ['0',]; //variable que nos da la posición de inicio de todas las filas
-    for (let i = 1; i < BOARD_HEIGHT; i++) {
-        ROW.push(`BOARD_WIDTH*${i}`)
+
+  for(let i=0; i<199; i+=BOARD_WIDTH){
+      const row = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8, i+9];
+
+      if(row.every(index => arrayBoard[index].classList.contains('taken'))){
+        row.forEach(index => {
+            arrayBoard[index].classList.remove('taken');
+            arrayBoard[index].classList.remove('tetromino');
+        })
     }
 
-    return ROW.every(index => arrayBoard[index].classList.contains('board__tetromino'));
+  }
+
+   
+    // const ROW = ['0',]; //variable que nos da la posición de inicio de todas las filas
+    // for (let i = 1; i < BOARD_HEIGHT; i++) {
+    //     ROW.push(`BOARD_WIDTH*${i}`)
+    // }
+
+    // return ROW.every(index => arrayBoard[index].classList.contains('board__tetromino'));
 }
  updateTetrisBoard();
 
