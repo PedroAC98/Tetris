@@ -235,10 +235,10 @@ function moveDown() {
 }
 
 function rotate() {
-    return currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')
-        || currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('taken'))
+    return currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock') 
         || currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === 0)
         || currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1))
+        || currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('taken'))
 }
 
 // -------------------------------------------//Esta función no hacia ----------------------------------------------------------
