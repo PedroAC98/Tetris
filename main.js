@@ -236,6 +236,7 @@ function moveDown() {
 
 function rotate() {
     return currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')
+        || currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('taken'))
         || currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === 0)
         || currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1))
 }
@@ -317,7 +318,7 @@ function gameLoop() { //Mover ficha hacia abajo, game over, eliminar fila comple
         }
         gameOver(timer);
 
-    }, 1000);
+    }, 500);
 
 }
 gameLoop();
@@ -340,13 +341,20 @@ function gameOver(timer) {
 
 function updateTetrisBoard() {
     //Mirar si hay alguna fila que cumpla la condición: todos los bloques de width*[i] contienen la clase:'board__tetromino'.
+    let counter = 0;
     for (let i = 0; i < 199; i += BOARD_WIDTH) {
         const ROW = [i, i + 1, i + 2, i + 3, i + 4, i + 5, i + 6, i + 7, i + 8, i + 9];
         if (ROW.every(index => arrayBoard[index].classList.contains('taken'))) {
             ROW.forEach(index => {
+                counter++;
                 arrayBoard[index].classList.remove('taken');
                 arrayBoard[index].classList.remove('tetromino');
-            })
+                if(counter===40){
+                    score+=800;
+                    counter=0;
+                }
+            }
+            )
             score += 50;
             SCORE_COUNTER.textContent = score;
 
