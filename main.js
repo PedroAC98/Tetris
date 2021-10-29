@@ -160,6 +160,10 @@ const T_TETROMINO_MINI = [
 const allTetrominos = [I_TETROMINO, L_TETROMINO, S_TETROMINO, Z_TETROMINO, J_TETROMINO, O_TETROMINO, T_TETROMINO];
 const allTetrominosMini = [I_TETROMINO_MINI, L_TETROMINO_MINI, S_TETROMINO_MINI, Z_TETROMINO_MINI, J_TETROMINO_MINI, O_TETROMINO_MINI, T_TETROMINO_MINI];
 
+
+
+
+
 // Pinta tetromino random al inicio del tablero
 function drawTetrominoeInMainBoard() {
     currentTetrominoe.piece.forEach(index => {
@@ -295,7 +299,7 @@ document.addEventListener('keydown', event => {
 // 
 
 function gameLoop() { //Mover ficha hacia abajo, game over, eliminar fila completa
-
+    
     undrawTetrominoeInMainBoard();
     drawTetrominoeInMainBoard();
     drawTetrominoeInMiniBoard();
@@ -324,7 +328,8 @@ function gameLoop() { //Mover ficha hacia abajo, game over, eliminar fila comple
     }, 1000);
 
 }
-gameLoop();
+
+
 
 // ------------------------------------------------GAMEOVER--------------------------------------------
 function gameOver(timer) {
@@ -335,11 +340,8 @@ function gameOver(timer) {
        let text= document.createElement('h1');
        text.textContent ="HAS PERDIDO PRINGAO";
        img.appendChild(text);
-        clearInterval(timer);   
-        
+        clearInterval(timer);
     }
-    
-
 }
 
 
@@ -373,3 +375,20 @@ function updateTetrisBoard() {
     // return ROW.every(index => arrayBoard[index].classList.contains('board__tetromino'));
 }
  updateTetrisBoard();
+
+
+ // Inicializar el juego
+
+const startButton = document.querySelector('.start__button');
+startButton.addEventListener("click", init);
+console.log()
+
+// limpiar Board y miniBoard
+function cleanMainBoard(){
+    arrayBoard.forEach(element=> element.classList.remove('.tetromino', '.taken'));
+}
+function init(){
+    cleanMainBoard();   
+    gameLoop(); 
+}
+ 
