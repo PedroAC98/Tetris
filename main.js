@@ -7,6 +7,9 @@ const MINI_BOARD_HEIGHT = 4;
 let gameBoard = document.querySelector('.game-board__container');
 let miniBoard = document.querySelector('.mini-board__container__block');
 
+let score = 0;
+const SCORE_COUNTER = document.querySelector('.score');
+
 
 //función que genera los bloques individuales de ambos tableros. Cada bloque (blockDOM) tiene un bloque dentro de él (insideblockDOM). 
 //Esta función devuelve blockDOM para poder utilizarla en la función drawBoard()
@@ -123,38 +126,38 @@ const T_TETROMINO = [
 // Generamos las piezas para el miniboard, con solo la primera rotacion y la constante MINI_BOARD_WIDTH
 const I_TETROMINO_MINI = [
     [0, 1, 2, 3],
-    
+
 ]
 
 const L_TETROMINO_MINI = [
     [0, 1, 2, MINI_BOARD_WIDTH],
-    
+
 ]
 
 const S_TETROMINO_MINI = [
     [1, 2, MINI_BOARD_WIDTH, MINI_BOARD_WIDTH + 1],
-    
+
 ]
 
 const Z_TETROMINO_MINI = [
     [0, 1, MINI_BOARD_WIDTH + 1, MINI_BOARD_WIDTH + 2],
-    
+
 ]
 
 const J_TETROMINO_MINI = [
     [0, 1, 2, MINI_BOARD_WIDTH + 2],
-    
+
 ]
 
 const O_TETROMINO_MINI = [
-    [0, 1, MINI_BOARD_WIDTH, MINI_BOARD_WIDTH + 1],
-    
+    [1, 2, MINI_BOARD_WIDTH + 1, MINI_BOARD_WIDTH + 2],
+
 ]
 
 
 const T_TETROMINO_MINI = [
     [0, 1, 2, MINI_BOARD_WIDTH + 1],
-    
+
 ]
 
 const allTetrominos = [I_TETROMINO, L_TETROMINO, S_TETROMINO, Z_TETROMINO, J_TETROMINO, O_TETROMINO, T_TETROMINO];
@@ -180,7 +183,7 @@ function undrawTetrominoeInMainBoard() {
 
 // ----------------------------------------FUNCIONES DEL MINIBOARD--------------------------------
 
- function drawTetrominoeInMiniBoard() {
+function drawTetrominoeInMiniBoard() {
     nextTetrominoe.miniPiece.forEach(index => {
         arrayMiniBoard[currentPositionMiniBoard + index].classList.add('tetromino');
     })
@@ -202,20 +205,16 @@ function undrawTetrominoeInMiniBoard() {
 let currentTetrominoe = generateRandomTetrominoe();
 let nextTetrominoe = generateRandomTetrominoe();
 
-function generateRandomTetrominoe() {   
-    
-    let randomTetrominoe = Math.floor(Math.random() * 7);
-    
+function generateRandomTetrominoe() {
 
-     return {
+    let randomTetrominoe = Math.floor(Math.random() * 7);
+    return {
         positionAtTetrominoeList: randomTetrominoe,
         piece: allTetrominos[randomTetrominoe][0],
         position: arrayBoard[3],
         rotation: 0,
         miniPiece: allTetrominosMini[randomTetrominoe][0],
     }
-    
-
 }
 
 //-------------------------------------------------------GESTION DEL MOVIMIENTO-----------------------------------------------------------------------
@@ -223,36 +222,37 @@ function generateRandomTetrominoe() {
 function moveRight() {
     return currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1
         || currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')))
-        ||currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index+1].classList.contains('taken'))
-        
+        || currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + 1].classList.contains('taken'))
+
 }
 
 function moveLeft() {
     return currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === 0
         || currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')))
-        ||currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index-1].classList.contains('taken'))
+        || currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index - 1].classList.contains('taken'))
 }
 
 
 function moveDown() {
     return currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock'))
-    ||currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('taken'))
+        || currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('taken'))
 }
 
 function rotate() {
-    return currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')
+    return currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock') 
         || currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === 0)
         || currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1))
+        || currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('taken'))
 }
 
 // -------------------------------------------//Esta función no hacia ----------------------------------------------------------
 
 function stop() {
-    if (currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock'))||
-    currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('taken')) ){
+    if (currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')) ||
+        currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('taken'))) {
         currentTetrominoe.piece.forEach(index => arrayBoard[currentPosition + index].classList.add('taken'));
     }
-    else{
+    else {
         moveDown()
     }
 }
@@ -303,15 +303,12 @@ function gameLoop() { //Mover ficha hacia abajo, game over, eliminar fila comple
     undrawTetrominoeInMainBoard();
     drawTetrominoeInMainBoard();
     drawTetrominoeInMiniBoard();
-    const timer= setInterval(() => {
-         
-        
-        
+    const timer = setInterval(() => {
         if (moveDown() === false) {
             undrawTetrominoeInMainBoard();
             currentPosition = currentPosition + BOARD_WIDTH;
             drawTetrominoeInMainBoard();
-            
+
         }
         else {
             stop();
@@ -324,8 +321,8 @@ function gameLoop() { //Mover ficha hacia abajo, game over, eliminar fila comple
             drawTetrominoeInMiniBoard();
         }
         gameOver(timer);
-        
-    }, 1000);
+
+    }, 500);
 
 }
 
@@ -333,47 +330,52 @@ function gameLoop() { //Mover ficha hacia abajo, game over, eliminar fila comple
 
 // ------------------------------------------------GAMEOVER--------------------------------------------
 function gameOver(timer) {
-    const row = [0,1,2,3,4,5,6,7,8,9];
+    const row = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-    if(row.find(index => arrayBoard[index].classList.contains('taken'))){
+    if (row.find(index => arrayBoard[index].classList.contains('taken'))) {
         let img = document.querySelector(".game-board__container")
-       let text= document.createElement('h1');
-       text.textContent ="HAS PERDIDO PRINGAO";
-       img.appendChild(text);
+
+        let text = document.createElement('h1');
+        text.textContent = "HAS PERDIDO PRINGAO";
+        img.appendChild(text);
         clearInterval(timer);
+
     }
+
+
 }
-
-
-
 
 function updateTetrisBoard() {
     //Mirar si hay alguna fila que cumpla la condición: todos los bloques de width*[i] contienen la clase:'board__tetromino'.
+    let counter = 0;
+    for (let i = 0; i < 199; i += BOARD_WIDTH) {
+        const ROW = [i, i + 1, i + 2, i + 3, i + 4, i + 5, i + 6, i + 7, i + 8, i + 9];
+        if (ROW.every(index => arrayBoard[index].classList.contains('taken'))) {
+            ROW.forEach(index => {
+                counter++;
+                arrayBoard[index].classList.remove('taken');
+                arrayBoard[index].classList.remove('tetromino');
+                if(counter===40){
+                    score+=800;
+                    counter=0;
+                }
+            }
+            )
+            score += 50;
+            SCORE_COUNTER.textContent = score;
 
-  for(let i=0; i<199; i+=BOARD_WIDTH){
-      const row = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8, i+9];
-
-      if(row.every(index => arrayBoard[index].classList.contains('taken'))){
-        row.forEach(index => {
-            arrayBoard[index].classList.remove('taken');
-            arrayBoard[index].classList.remove('tetromino');
-        })
-
-        const REMOVED_ROW = arrayBoard.splice(i,BOARD_WIDTH);
+            const REMOVED_ROW = arrayBoard.splice(i, BOARD_WIDTH);
             arrayBoard = REMOVED_ROW.concat(arrayBoard);
-            arrayBoard.forEach(index=>gameBoard.appendChild(index));
+            arrayBoard.forEach(index => gameBoard.appendChild(index));
+
+            // if(counter===BOARD_WIDTH*4){
+            //     score+=1000;
+            // }
+        }
+
     }
-
-  }
-
-   
-    // const ROW = ['0',]; //variable que nos da la posición de inicio de todas las filas
-    // for (let i = 1; i < BOARD_HEIGHT; i++) {
-    //     ROW.push(`BOARD_WIDTH*${i}`)
-    // }
-
-    // return ROW.every(index => arrayBoard[index].classList.contains('board__tetromino'));
 }
+
  updateTetrisBoard();
 
 
@@ -392,3 +394,4 @@ function init(){
     gameLoop(); 
 }
  
+
