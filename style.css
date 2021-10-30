@@ -128,6 +128,29 @@
     transform: rotate(180deg);
 } 
 
+/*---------------------------------  BUTTON --------------------------------- */
+
+.start__button{
+    width: 5em;
+    height: 2em;
+    background-color: #C6CFA2;
+    opacity: 0.7;
+    color: black;
+    border-style: solid;
+    border-color: black;
+    font-family: "Lucida Console", Courier, monospace;
+    font-size: 1rem;
+    font-weight: bold;
+
+}
+
+.start__button:hover{
+    background-color: black;
+    transition: 0.3s ease-out;
+    color: #C6CFA2;
+}
+
+
 /*---------------------------------  FOOTER --------------------------------- */
 
 /* .footer{

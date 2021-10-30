@@ -308,6 +308,7 @@ function gameLoop() { //Mover ficha hacia abajo, game over, eliminar fila comple
             undrawTetrominoeInMainBoard();
             currentPosition = currentPosition + BOARD_WIDTH;
             drawTetrominoeInMainBoard();
+            updateTetrisBoard();
 
         }
         else {
@@ -339,6 +340,7 @@ function gameOver(timer) {
         text.textContent = "HAS PERDIDO PRINGAO";
         img.appendChild(text);
         clearInterval(timer);
+        score=0;
 
     }
 
@@ -362,7 +364,7 @@ function updateTetrisBoard() {
             }
             )
             score += 50;
-            SCORE_COUNTER.textContent = score;
+           updateScore();
 
             const REMOVED_ROW = arrayBoard.splice(i, BOARD_WIDTH);
             arrayBoard = REMOVED_ROW.concat(arrayBoard);
@@ -378,19 +380,23 @@ function updateTetrisBoard() {
 
  updateTetrisBoard();
 
+function updateScore(){
+    SCORE_COUNTER.textContent=score;
+    return score
+} 
 
  // Inicializar el juego
 
 const startButton = document.querySelector('.start__button');
-startButton.addEventListener("click", init);
-console.log()
+startButton.addEventListener('click', init);
 
 // limpiar Board y miniBoard
 function cleanMainBoard(){
-    arrayBoard.forEach(element=> element.classList.remove('.tetromino', '.taken'));
+    arrayBoard.forEach(element=> element.classList.remove('tetromino', 'taken'));
 }
 function init(){
-    cleanMainBoard();   
+    cleanMainBoard();  
+    updateScore();  
     gameLoop(); 
 }
  
