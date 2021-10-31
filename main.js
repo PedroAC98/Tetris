@@ -336,9 +336,10 @@ function gameOver(timer) {
     if (row.find(index => arrayBoard[index].classList.contains('taken'))) {
         let img = document.querySelector(".game-board__container")
 
-        let text = document.createElement('h1');
-        text.textContent = "HAS PERDIDO PRINGAO";
-        img.appendChild(text);
+        let textGameOver = document.createElement('div');
+        textGameOver.classList = "gameOver__container"
+        textGameOver.textContent = "GAME OVER";
+        img.appendChild(textGameOver);
         clearInterval(timer);
         score=0;
 

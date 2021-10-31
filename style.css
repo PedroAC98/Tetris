@@ -77,6 +77,8 @@
 .score__counter{
     display: flex;
     text-align: center;
+    color: #303a21;
+    font-family: "Lucida Console", Courier, monospace;
     justify-content: center;
     align-items: center;
     border: 2px solid black;
@@ -148,6 +150,21 @@
     background-color: black;
     transition: 0.3s ease-out;
     color: #C6CFA2;
+    font-family: "Lucida Console", Courier, monospace;
+}
+
+.gameOver__container{
+    position: absolute;
+    width: 240px;
+    height: 180px;
+    border: 2px solid black;
+    padding-top: 40px;
+    text-align: center;
+    margin-bottom: 80px;
+    color: #303a21;
+    font-size: 4rem;
+    font-family: "Lucida Console", Courier, monospace;
+    background-color: #C6CFA2;
 }
 
 
