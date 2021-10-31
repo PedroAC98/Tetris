@@ -194,11 +194,6 @@ function undrawTetrominoeInMiniBoard() {
         arrayMiniBoard[currentPositionMiniBoard + index].classList.remove('tetromino');
     })
 }
-// function cleanMiniBoard() {
-//     generateRandomTetrominoe().forEach(index=> {
-//         arrayMiniBoard[currentPositionMiniBoard+index].classList.remove('board__tetromino');
-//     })
-// }
 // --------------------------------------------------------------------------------------------------
 
 //Obtención de una pieza de manera aleatorio, con rotacion incial
@@ -220,15 +215,15 @@ function generateRandomTetrominoe() {
 //-------------------------------------------------------GESTION DEL MOVIMIENTO-----------------------------------------------------------------------
 
 function moveRight() {
-    return currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1
-        || currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')))
+    return currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1)
+        || currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock'))
         || currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + 1].classList.contains('taken'))
 
 }
 
 function moveLeft() {
-    return currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === 0
-        || currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')))
+    return currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === 0)
+        || currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock'))
         || currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index - 1].classList.contains('taken'))
 }
 
@@ -239,13 +234,11 @@ function moveDown() {
 }
 
 function rotate() {
-    return currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock') 
+    return currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock'))
         || currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === 0)
-        || currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1))
+        || currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1)
         || currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('taken'))
 }
-
-// -------------------------------------------//Esta función no hacia ----------------------------------------------------------
 
 function stop() {
     if (currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')) ||
@@ -296,8 +289,6 @@ document.addEventListener('keydown', event => {
 
 //-------------------------------------------------------BUCLES------------------------------------------------------------------------
 
-// 
-
 function gameLoop() { //Mover ficha hacia abajo, game over, eliminar fila completa
     
     undrawTetrominoeInMainBoard();
@@ -334,18 +325,24 @@ function gameOver(timer) {
     const row = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     if (row.find(index => arrayBoard[index].classList.contains('taken'))) {
-        let img = document.querySelector(".game-board__container")
-
-        let text = document.createElement('h1');
-        text.textContent = "HAS PERDIDO PRINGAO";
-        img.appendChild(text);
+        textContainer.style.display='flex';
         clearInterval(timer);
         score=0;
 
     }
 
-
 }
+// ------------------------------------------------GAMEOVER-TEXT--------------------------------------------
+    let img = document.querySelector(".game-board__container");
+    let textContainer = document.createElement('div');
+    textContainer.classList.add('game-over__text__container');
+    textContainer.style.display='none';
+    let text = document.createElement('h1');
+    text.classList.add('game-over__text');
+    text.textContent = "HAS PERDIDO PRINGAO";
+    textContainer.appendChild(text);
+    img.appendChild(textContainer);
+
 
 function updateTetrisBoard() {
     //Mirar si hay alguna fila que cumpla la condición: todos los bloques de width*[i] contienen la clase:'board__tetromino'.
@@ -369,10 +366,6 @@ function updateTetrisBoard() {
             const REMOVED_ROW = arrayBoard.splice(i, BOARD_WIDTH);
             arrayBoard = REMOVED_ROW.concat(arrayBoard);
             arrayBoard.forEach(index => gameBoard.appendChild(index));
-
-            // if(counter===BOARD_WIDTH*4){
-            //     score+=1000;
-            // }
         }
 
     }
@@ -396,6 +389,7 @@ function cleanMainBoard(){
 }
 function init(){
     cleanMainBoard();  
+    textContainer.style.display='none';
     updateScore();  
     gameLoop(); 
 }
