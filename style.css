@@ -96,6 +96,21 @@
     margin-bottom: 1em;
     }
 
+.game-over__text__container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    z-index: 10;
+    width: 30em;
+    height: 10em;
+    background-color: #C6CFA2; 
+    border: 2px solid black;
+    text-align: center;
+
+
+}
+
     /*---------------------------------  ARROW CONTAINERS --------------------------------- */
 .key-controllers__container{
     display: flex;
