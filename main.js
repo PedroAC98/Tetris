@@ -403,4 +403,8 @@ function init(){
     gameLoop(); 
 }
  
-
+startButton.addEventListener("click", () => {
+    const playMusic = new Audio('tetris-main-theme.mp3');
+    playMusic.loop = true;
+    playMusic.play();
+})
