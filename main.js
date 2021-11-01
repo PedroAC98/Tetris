@@ -334,19 +334,20 @@ function gameOver(timer) {
     const row = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     if (row.find(index => arrayBoard[index].classList.contains('taken'))) {
-        let img = document.querySelector(".game-board__container")
-
-        let textGameOver = document.createElement('div');
-        textGameOver.classList = "gameOver__container"
-        textGameOver.textContent = "GAME OVER";
-        img.appendChild(textGameOver);
+        textGameOver.style.display='flex';
         clearInterval(timer);
         score=0;
-
+    
     }
-
-
 }
+
+let img = document.querySelector(".game-board__container")
+let textGameOver = document.createElement('div');
+textGameOver.classList = "gameOver__container"
+textGameOver.textContent = "GAME OVER";
+textGameOver.style.display = 'none';
+img.appendChild(textGameOver);
+
 
 function updateTetrisBoard() {
     //Mirar si hay alguna fila que cumpla la condición: todos los bloques de width*[i] contienen la clase:'board__tetromino'.
@@ -396,7 +397,8 @@ function cleanMainBoard(){
     arrayBoard.forEach(element=> element.classList.remove('tetromino', 'taken'));
 }
 function init(){
-    cleanMainBoard();  
+    cleanMainBoard();
+    textGameOver.style.display = 'none';
     updateScore();  
     gameLoop(); 
 }
