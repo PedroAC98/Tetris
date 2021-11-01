@@ -14,6 +14,9 @@ const SCORE_COUNTER = document.querySelector('.score');
 
 const playMusic = new Audio('tetris-main-theme.mp3');
 const rotateSound = new Audio('rotate.mp3');
+const endGame = new Audio('game-over.mp3');
+const lineComplete = new Audio('linea.mp3');
+const tetris = new Audio('tetris-4lines.mp3');
 
 //------------------------------------------------------------------------------------------------------
 
@@ -344,6 +347,7 @@ function gameOver(timer) {
         textGameOver.style.display = 'flex';
         clearInterval(timer);
         playMusic.pause();
+        endGame.play();
         score = 0;
 
     }
@@ -367,8 +371,10 @@ function updateTetrisBoard() {
                 counter++;
                 arrayBoard[index].classList.remove('taken');
                 arrayBoard[index].classList.remove('tetromino');
+                lineComplete.play();
                 if (counter === 40) {
                     score += 800;
+                    tetris.play();
                     counter = 0;
                 }
             }
