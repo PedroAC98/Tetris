@@ -8,7 +8,28 @@ let gameBoard = document.querySelector('.game-board__container');
 let miniBoard = document.querySelector('.mini-board__container__block');
 
 let score = 0;
+let finalScore = 0;
+let tetrisCount = 0;
+let filasCount = 0;
 const SCORE_COUNTER = document.querySelector('.score');
+
+
+//---------------------------------------------------------------GAMEOVER TEXT---------------------------------------
+let img = document.querySelector(".game-board__container")
+let textGameOver = document.createElement('div');
+let textScore = document.createElement('p');
+textScore.classList.add('result__text');
+let textTetris = document.createElement('p');
+textTetris.classList.add('result__text');
+let textFilas = document.createElement('p');
+textFilas.classList.add('result__text');
+textGameOver.classList = "gameOver__container";
+textGameOver.textContent = "GAME OVER";
+textGameOver.appendChild(textScore);
+textGameOver.appendChild(textFilas);
+textGameOver.appendChild(textTetris);
+textGameOver.style.display = 'none';
+img.appendChild(textGameOver);
 
 //---------------------------------------------------------------MUSICA---------------------------------------
 
@@ -337,8 +358,6 @@ function gameLoop() { //Mover ficha hacia abajo, game over, eliminar fila comple
 
 }
 
-
-
 // ------------------------------------------------GAMEOVER--------------------------------------------
 function gameOver(timer) {
     const row = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -348,17 +367,15 @@ function gameOver(timer) {
         clearInterval(timer);
         playMusic.pause();
         endGame.play();
+        textScore.textContent = `TU PUNTUACIÓN: ${finalScore}`;
+        textFilas.textContent = `TUS FILAS: ${filasCount}`;
+        textTetris.textContent = `TUS TETRIS: ${tetrisCount}`;
         score = 0;
+        tetrisCount = 0;
+        filasCount = 0;
 
     }
 }
-
-let img = document.querySelector(".game-board__container")
-let textGameOver = document.createElement('div');
-textGameOver.classList = "gameOver__container"
-textGameOver.textContent = "GAME OVER";
-textGameOver.style.display = 'none';
-img.appendChild(textGameOver);
 
 
 function updateTetrisBoard() {
@@ -367,6 +384,7 @@ function updateTetrisBoard() {
     for (let i = 0; i < 199; i += BOARD_WIDTH) {
         const ROW = [i, i + 1, i + 2, i + 3, i + 4, i + 5, i + 6, i + 7, i + 8, i + 9];
         if (ROW.every(index => arrayBoard[index].classList.contains('taken'))) {
+            filasCount++;
             ROW.forEach(index => {
                 counter++;
                 arrayBoard[index].classList.remove('taken');
@@ -374,21 +392,19 @@ function updateTetrisBoard() {
                 lineComplete.play();
                 if (counter === 40) {
                     score += 800;
+                    tetrisCount++;
                     tetris.play();
                     counter = 0;
                 }
             }
             )
             score += 50;
-            updateScore();
+            updateScore()
+            console.log(score);
 
             const REMOVED_ROW = arrayBoard.splice(i, BOARD_WIDTH);
             arrayBoard = REMOVED_ROW.concat(arrayBoard);
             arrayBoard.forEach(index => gameBoard.appendChild(index));
-
-            // if(counter===BOARD_WIDTH*4){
-            //     score+=1000;
-            // }
         }
 
     }
@@ -398,10 +414,11 @@ updateTetrisBoard();
 
 function updateScore() {
     SCORE_COUNTER.textContent = score;
+    finalScore = score;
     return score
 }
 
-// Inicializar el juego
+// ------------------------------------------------ Inicializar el juego---------------------------------
 
 const startButton = document.querySelector('.start__button');
 startButton.addEventListener('click', init);
