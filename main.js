@@ -287,6 +287,8 @@ document.addEventListener('keydown', event => {
         currentTetrominoe.rotation++
         if (currentTetrominoe.rotation === currentTetrominoe.piece.length) {
             currentTetrominoe.rotation = 0
+            const rotateSound = new Audio('rotate.mp3');
+            rotateSound.play();            
         }
         currentTetrominoe.piece = allTetrominos[currentTetrominoe.positionAtTetrominoeList][currentTetrominoe.rotation]
         drawTetrominoeInMainBoard();
