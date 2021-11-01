@@ -10,6 +10,13 @@ let miniBoard = document.querySelector('.mini-board__container__block');
 let score = 0;
 const SCORE_COUNTER = document.querySelector('.score');
 
+//---------------------------------------------------------------MUSICA---------------------------------------
+
+const playMusic = new Audio('tetris-main-theme.mp3');
+const rotateSound = new Audio('rotate.mp3');
+
+//------------------------------------------------------------------------------------------------------
+
 
 //función que genera los bloques individuales de ambos tableros. Cada bloque (blockDOM) tiene un bloque dentro de él (insideblockDOM). 
 //Esta función devuelve blockDOM para poder utilizarla en la función drawBoard()
@@ -20,7 +27,6 @@ function generateBoardBlock() {
     blockDOM.classList.add('block');
     insideblockDOM.classList.add('insideblock');
     blockDOM.appendChild(insideblockDOM);
-    // makeBlock = blockDOM;------------------------------------> ¿QUÉ ES ESTO?
     return blockDOM;
 }
 
@@ -239,7 +245,7 @@ function moveDown() {
 }
 
 function rotate() {
-    return currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock') 
+    return currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')
         || currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === 0)
         || currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1))
         || currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('taken'))
@@ -285,10 +291,9 @@ document.addEventListener('keydown', event => {
     if (code === 38 && rotate() === false) {
         undrawTetrominoeInMainBoard()
         currentTetrominoe.rotation++
+        rotateSound.play();
         if (currentTetrominoe.rotation === currentTetrominoe.piece.length) {
             currentTetrominoe.rotation = 0
-            const rotateSound = new Audio('rotate.mp3');
-            rotateSound.play();            
         }
         currentTetrominoe.piece = allTetrominos[currentTetrominoe.positionAtTetrominoeList][currentTetrominoe.rotation]
         drawTetrominoeInMainBoard();
@@ -301,7 +306,7 @@ document.addEventListener('keydown', event => {
 // 
 
 function gameLoop() { //Mover ficha hacia abajo, game over, eliminar fila completa
-    
+
     undrawTetrominoeInMainBoard();
     drawTetrominoeInMainBoard();
     drawTetrominoeInMiniBoard();
@@ -336,10 +341,11 @@ function gameOver(timer) {
     const row = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     if (row.find(index => arrayBoard[index].classList.contains('taken'))) {
-        textGameOver.style.display='flex';
+        textGameOver.style.display = 'flex';
         clearInterval(timer);
-        score=0;
-    
+        playMusic.pause();
+        score = 0;
+
     }
 }
 
@@ -361,14 +367,14 @@ function updateTetrisBoard() {
                 counter++;
                 arrayBoard[index].classList.remove('taken');
                 arrayBoard[index].classList.remove('tetromino');
-                if(counter===40){
-                    score+=800;
-                    counter=0;
+                if (counter === 40) {
+                    score += 800;
+                    counter = 0;
                 }
             }
             )
             score += 50;
-           updateScore();
+            updateScore();
 
             const REMOVED_ROW = arrayBoard.splice(i, BOARD_WIDTH);
             arrayBoard = REMOVED_ROW.concat(arrayBoard);
@@ -382,31 +388,31 @@ function updateTetrisBoard() {
     }
 }
 
- updateTetrisBoard();
+updateTetrisBoard();
 
-function updateScore(){
-    SCORE_COUNTER.textContent=score;
+function updateScore() {
+    SCORE_COUNTER.textContent = score;
     return score
-} 
+}
 
- // Inicializar el juego
+// Inicializar el juego
 
 const startButton = document.querySelector('.start__button');
 startButton.addEventListener('click', init);
 
 // limpiar Board y miniBoard
-function cleanMainBoard(){
-    arrayBoard.forEach(element=> element.classList.remove('tetromino', 'taken'));
+function cleanMainBoard() {
+    arrayBoard.forEach(element => element.classList.remove('tetromino', 'taken'));
 }
-function init(){
+function init() {
     cleanMainBoard();
     textGameOver.style.display = 'none';
-    updateScore();  
-    gameLoop(); 
+    updateScore();
+    gameLoop();
 }
- 
+
 startButton.addEventListener("click", () => {
-    const playMusic = new Audio('tetris-main-theme.mp3');
     playMusic.loop = true;
     playMusic.play();
+    playMusic.currentTime = 0;
 })
