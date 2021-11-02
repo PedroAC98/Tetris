@@ -399,8 +399,7 @@ function updateTetrisBoard() {
             }
             )
             score += 50;
-            updateScore()
-            console.log(score);
+            updateScore();
 
             const REMOVED_ROW = arrayBoard.splice(i, BOARD_WIDTH);
             arrayBoard = REMOVED_ROW.concat(arrayBoard);
