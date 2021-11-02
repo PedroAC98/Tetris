@@ -224,11 +224,7 @@ function undrawTetrominoeInMiniBoard() {
         arrayMiniBoard[currentPositionMiniBoard + index].classList.remove('tetromino');
     })
 }
-// function cleanMiniBoard() {
-//     generateRandomTetrominoe().forEach(index=> {
-//         arrayMiniBoard[currentPositionMiniBoard+index].classList.remove('board__tetromino');
-//     })
-// }
+
 // --------------------------------------------------------------------------------------------------
 
 //Obtención de una pieza de manera aleatorio, con rotacion incial
@@ -391,7 +387,7 @@ function updateTetrisBoard() {
                 arrayBoard[index].classList.remove('tetromino');
                 lineComplete.play();
                 if (counter === 40) {
-                    score += 800;
+                    score += 1000;
                     tetrisCount++;
                     tetris.play();
                     counter = 0;
