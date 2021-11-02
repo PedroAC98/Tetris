@@ -220,7 +220,7 @@ function drawTetrominoeInMiniBoard() {
 }
 
 function undrawTetrominoeInMiniBoard() {
-    currentTetrominoe.miniPiece.forEach(index => {
+    nextTetrominoe.miniPiece.forEach(index => {
         arrayMiniBoard[currentPositionMiniBoard + index].classList.remove('tetromino');
     })
 }
@@ -265,6 +265,9 @@ function moveDown() {
 }
 
 function rotate() {
+    // if (currentTetrominoe.piece===[0][currentTetrominoe.rotation] && arrayBoard[(currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 2]){
+    //     return currentPosition = currentPosition - 2;
+    //     }
     return currentTetrominoe.piece.some(index => arrayBoard[currentPosition + index + BOARD_WIDTH].classList.contains('boardBlock')
         || currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === 0)
         || currentTetrominoe.piece.some(index => (currentPosition + index) % BOARD_WIDTH === BOARD_WIDTH - 1))
@@ -318,6 +321,8 @@ document.addEventListener('keydown', event => {
         currentTetrominoe.piece = allTetrominos[currentTetrominoe.positionAtTetrominoeList][currentTetrominoe.rotation]
         drawTetrominoeInMainBoard();
     }
+
+    
 })
 
 
