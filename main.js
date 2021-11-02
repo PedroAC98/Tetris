@@ -220,7 +220,7 @@ function drawTetrominoeInMiniBoard() {
 }
 
 function undrawTetrominoeInMiniBoard() {
-    nextTetrominoe.miniPiece.forEach(index => {
+    currentTetrominoe.miniPiece.forEach(index => {
         arrayMiniBoard[currentPositionMiniBoard + index].classList.remove('tetromino');
     })
 }
